@@ -206,9 +206,14 @@ def extract_phd_emails(ww_x_username, ww_x_password, PHD_public, PHD_report_type
 
     for curs in df_ladies.cursus.value_counts().index:
         emails = list(set(df_ladies[df_ladies.cursus==curs].email))
+        # discard nans
+        emails = [email for email in emails if type(email)==str]
         number = len(emails)
+
         filename = f"{phd_dir}/{curs.replace(' ', '_')}_({number} emails).txt"
         print(f"Writing file {filename}...")
+
+        
         with open(filename, "w") as f:
             f.write(";".join(emails))
             
@@ -218,6 +223,8 @@ def extract_phd_emails(ww_x_username, ww_x_password, PHD_public, PHD_report_type
     writer.save()
 
     emails = list(set(df_ladies.email))
+    # discard nans
+    emails = [email for email in emails if type(email)==str]
     number = len(emails)
 
     filename = f"{phd_dir}/All_({number} emails).txt"
