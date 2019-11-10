@@ -86,7 +86,7 @@ def myfun(x):
 def collect_male_female_names():
 	# getting all_male_names, and all_female_names
 	skiprows=2
-	list_df2 = pd.read_html(f"AllMScBSc.html", skiprows=skiprows, header=0) #, display_only=False)
+	list_df2 = pd.read_html("AllMScBSc.html", skiprows=skiprows, header=0) #, display_only=False)
 	df2 = list_df2[0]
 	df2.columns = ["gender", "full_name", "bsc", "msc", "spec", "filiere_opt",
 					"minor", "status", "exchange_type", "exchange_school", "sciper", "nationality"]
@@ -103,14 +103,14 @@ def collect_male_female_names():
 	df2 = df2[df2["gender"].isin(["Mister", "Monsieur", "Miss", "Madam"])]
 	df2["first_name"] = df2.apply(lambda row: myfun(row), axis=1)
 
-	if os.path.isfile("male_names.txt"):
-		with open("male_names.txt", "r") as f:
+	if os.path.isfile("names/male_names.txt"):
+		with open("names/male_names.txt", "r") as f:
 			old_male_names = set(f.read().splitlines())
 	else:
 		old_male_names = set()
 	
-	if os.path.isfile("female_names.txt"):
-		with open("female_names.txt", "r") as f:
+	if os.path.isfile("names/female_names.txt"):
+		with open("names/female_names.txt", "r") as f:
 			old_female_names = set(f.read().splitlines())
 	else:
 		old_female_names = set()
@@ -125,10 +125,10 @@ def collect_male_female_names():
 	all_male_names = [i for i in all_male_names if i] 
 	all_female_names = [i for i in all_female_names if i] 
 	
-	with open("male_names.txt", "+w") as f:
+	with open("names/male_names.txt", "+w") as f:
 		f.write("\n".join(all_male_names))
 	
-	with open("female_names.txt", "+w") as f:
+	with open("names/female_names.txt", "+w") as f:
 		f.write("\n".join(all_female_names))
 
 	return all_male_names, all_female_names
@@ -228,18 +228,18 @@ def extract_phd_emails(ww_x_username, ww_x_password, PHD_public, PHD_report_type
 
 	for name, gender in zip(names, genders):
 		if gender == "Mister":
-			with open("male_names.txt", "a+") as f:
-				f.write(f"{name}\n")
+			with open("names/male_names.txt", "a+") as f:
+				f.write(f"{name.lower()}\n")
 		elif gender == "Miss":
-			with open("female_names.txt", "a+") as f:
-				f.write(f"{name}\n")
+			with open("names/female_names.txt", "a+") as f:
+				f.write(f"{name.lower()}\n")
 		
 
 	df.sciper = df.sciper.astype(int)
 
 	# save everybody
-	pathlib.Path("DataAnalysis").mkdir(parents=True, exist_ok=True)
-	writer_all = pd.ExcelWriter(f'DataAnalysis/All_PhD.xlsx')
+	pathlib.Path("excels").mkdir(parents=True, exist_ok=True)
+	writer_all = pd.ExcelWriter(f'excels/All_PhD.xlsx')
 	df.to_excel(writer_all, "PhD", index=False)
 	writer_all.save()
 
@@ -298,8 +298,8 @@ def extract_msc_bsc_emails(ww_x_username, ww_x_password, MSC_BSC_public, MSC_BSC
 	writer = pd.ExcelWriter(f'{msc_bsc_dir}/All_BScMSc.xlsx')
 
 	# to save everybody
-	pathlib.Path("DataAnalysis").mkdir(parents=True, exist_ok=True)
-	writer_all = pd.ExcelWriter('DataAnalysis/All_MSc_BSc.xlsx')
+	pathlib.Path("excels").mkdir(parents=True, exist_ok=True)
+	writer_all = pd.ExcelWriter('excels/All_MSc_BSc.xlsx')
 
 	for acad_unit_name, MSC_BSC_ww_x_UNITE_ACAD in BSc_MSc_ACADEMIC_UNITS.items():
 
