@@ -3,12 +3,24 @@ Collect EPFL emails
 
 # Collect
 ```
-python run.py --username YOUR_EPFL_USERNAME --password YOUR_EPFL_PASSWORD
+python run.py --username YOUR_EPFL_USERNAME --password YOUR_EPFL_PASSWORD --academic-year ACADEMIC_YEAR_CODE
 ```
 
-# Output
-The emails will be located in directory `emails/`.
-For MSc and BSc students, the directory is: `emails/DATE_LAST_COLLECTED/msc_bsc/*`
-For PhD students, the directory is: `emails/DATE_LAST_COLLECTED/phd/*`
 
-Data for data stats is collected in `DataAnalysis/All_MSc_BSc.xlsx` and `DataAnalysis/All_PhD.xlsx`. The report (currently for 2019) can be found in Analysis.ipynb notebook.
+# Output
+Emails:
+- `emails/DATE_LAST_COLLECTED/msc_bsc/`
+- `emails/DATE_LAST_COLLECTED/phd/`
+
+Excels (all students):
+- `excels/All_MSc_BSc.xlsx`
+- `excels/All_PhD.xlsx`
+
+Notebooks:
+- [2019-2020](https://nbviewer.jupyter.org/github/EPFelles/email-collector/blob/master/analysis_per_year/Analysis2019-2020.ipynb)
+- [2018-2019](https://nbviewer.jupyter.org/github/EPFelles/email-collector/blob/master/analysis_per_year/Analysis2018-2019.ipynb)
+
+Reports:
+- [BSc and MSc degree](http://htmlpreview.github.io/?https://raw.githubusercontent.com/EPFelles/email-collector/master/reports/MScBSc.html)
+- [PhD degree](http://htmlpreview.github.io/?https://raw.githubusercontent.com/EPFelles/email-collector/master/reports/PhD.html)
+
